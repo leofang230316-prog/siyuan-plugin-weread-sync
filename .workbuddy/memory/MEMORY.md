@@ -102,4 +102,17 @@
 
 ## 分发状态
 
-按思源集市规范开发，但 **暂不上传集市，等待用户明确指令**（当前验证版本 v1.2.0）。仓库名与 plugin.json 的 name 必须一致且为 `siyuan-plugin-weread-sync`。
+- 仓库：https://github.com/leofang230316-prog/siyuan-plugin-weread-sync （**gh 登录账号是 leofang230316-prog，不是 fangtype**）
+- 已发布 Release v1.2.1（附 package.zip）；集市 PR：https://github.com/siyuan-note/bazaar/pull/2228
+- **本机 `git push` 走 github.com 被网络限制阻断**（curl github.com 返回 000，api.github.com 通），
+  推代码改用 **GitHub Git Data API**（脚本 `scripts/gh_push_api.mjs`）。
+  坑：空仓库用该 API 建 blob 会 409，须先用 Contents API 造初始 commit。
+- **集市清单是 `plugins.txt`（每行 owner/repo），不是 plugins.json**——官方文档已过时，别按旧文档找。
+- 后续发新版：只需发新 Release（tag + package.zip），**不必再提集市 PR**。
+
+## 打赏区块（v1.2.1 起）
+
+设置面板底部有打赏区：收款码（base64 内联在 `src/assets/donate.ts`）+ 备注
+「独立开发，感谢打赏，不断进步」+ 作者 Fang-type + 邮箱 fxysife@163.com（mailto 可点）。
+样式参照用户另一项目 CF-TODO 的 `settings_page.dart`（640-733 行）。
+内联 base64 的原因：思源插件静态资源路径不稳定，内联保证显示；代价 index.js 约 300KB。

@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-weread-sync",
   "author": "fangtype",
   "url": "https://github.com/leofang230316-prog/siyuan-plugin-weread-sync",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "minAppVersion": "3.0.0",
   "disabledInPublish": false,
   "icon": "icon.png",
@@ -49,6 +49,5 @@
     "笔记同步",
     "划线",
     "阅读"
-  ],
-  "i18n": ["zh_CN", "en_US"]
+  ]
 }
