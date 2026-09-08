@@ -1,0 +1,139 @@
+{
+  "pluginName": "微信读书同步",
+  "pluginDesc": "同步微信读书的书籍、划线与想法到思源笔记",
+
+  "login": {
+    "title": "登录微信读书",
+    "desc": "使用微信扫描下方二维码登录",
+    "refreshTip": "刷新二维码",
+    "waiting": "等待扫码…",
+    "scanned": "已扫码，请在微信中确认",
+    "success": "登录成功",
+    "failed": "登录失败，请重试",
+    "expired": "二维码已过期，正在自动刷新…",
+    "otp": "需要验证码",
+    "otpDesc": "当前登录环境需要额外验证，请查收微信或短信中的验证码后填入下方",
+    "otpPlaceholder": "请输入验证码",
+    "otpSubmit": "提交验证码",
+    "otpWrong": "验证码不正确，请重新输入",
+    "otpExpired": "验证码已过期，请重新获取",
+    "qrCountdown": "二维码 {n} 秒后自动刷新",
+    "logout": "退出登录",
+    "logoutConfirm": "退出后将清除本地登录凭证，已同步的笔记不受影响。确定退出吗？",
+    "notLoggedIn": "未登录",
+    "cookieFallback": "二维码无法使用？手动粘贴 Cookie",
+    "cookieTitle": "手动粘贴 Cookie",
+    "cookieDesc": "在浏览器登录 weread.qq.com，打开开发者工具的「网络」面板，复制任意请求的 Cookie 值粘贴到下方。",
+    "cookiePlaceholder": "在此粘贴 Cookie，例如 wr_vid=xxx; wr_skey=xxx; ...",
+    "cookieSubmit": "提交",
+    "cookieEmpty": "Cookie 不能为空",
+    "cookieInvalid": "Cookie 无效，请检查是否完整",
+    "loggedIn": "已登录",
+    "nickname": "昵称",
+    "checkCred": "正在校验登录状态…",
+    "credExpired": "登录已过期，请重新扫码登录"
+  },
+
+  "dock": {
+    "title": "微信读书",
+    "syncAll": "同步全部",
+    "quickSync": "快速同步（仅有笔记的书）",
+    "viewLog": "查看同步日志",
+    "refresh": "刷新书架",
+    "settings": "设置",
+    "searchPlaceholder": "搜索书名、作者、划线或想法…",
+    "bookCount": "共 {n} 本书",
+    "notesCount": "{n} 条笔记",
+    "noBooks": "还没有书籍，点击「同步全部」开始",
+    "noMatch": "没有匹配的书籍或笔记",
+    "progress": "阅读进度 {n}%",
+    "readingTime": "已读 {n}",
+    "insert": "插入",
+    "inserted": "已插入到当前光标位置",
+    "insertFailed": "插入失败，请确认光标在文档中",
+    "sync": "同步",
+    "syncing": "同步中",
+    "mobileReadonly": "移动端仅支持查看，同步与插入请使用桌面端"
+  },
+
+  "sync": {
+    "title": "同步中",
+    "preparing": "正在获取书架…",
+    "fetchingBook": "正在处理《{title}》",
+    "progress": "{done} / {total}",
+    "cancel": "取消",
+    "done": "同步完成",
+    "cancelled": "同步已取消",
+    "report": "新增 {added} 条 · 更新 {updated} 条 · 冲突 {conflict} 条 · 远端删除 {deleted} 条 · 失败 {failed} 本",
+    "failedList": "以下书籍同步失败",
+    "forceRebuild": "强制全量重建",
+    "forceRebuildTitle": "强制全量重建",
+    "forceRebuildWarn": "此操作将丢弃你在思源中对这些文档所做的全部编辑，并用微信读书的当前内容重新生成。此操作不可撤销。确定继续吗？",
+    "noLogin": "请先登录微信读书",
+    "interrupted": "同步中断，已完成的部分已保存，可再次同步继续"
+  },
+
+  "doc": {
+    "bookInfo": "书籍信息",
+    "author": "作者",
+    "translator": "译者",
+    "publisher": "出版社",
+    "publishTime": "出版时间",
+    "isbn": "ISBN",
+    "category": "分类",
+    "progress": "阅读进度",
+    "readingTime": "阅读时长",
+    "cover": "封面",
+    "notes": "笔记"
+  },
+
+  "note": {
+    "deletedMark": "（已在微信读书删除）",
+    "conflictMark": "（微信读书更新版）",
+    "noChapter": "未分章"
+  },
+
+  "search": {
+    "title": "插入微信读书笔记",
+    "placeholder": "搜索书名、作者、划线或想法…",
+    "empty": "没有找到匹配的笔记",
+    "hint": "↑↓ 选择 · Enter 插入 · Esc 关闭"
+  },
+
+  "setting": {
+    "title": "设置",
+    "notebook": "笔记本",
+    "notebookDesc": "同步的笔记将写入该笔记本",
+    "syncRange": "同步范围",
+    "rangeAll": "全部书籍",
+    "rangeNoted": "仅有笔记的书",
+    "autoSync": "定时同步",
+    "autoSyncDesc": "每天自动同步一次（默认关闭）",
+    "concurrency": "并发数",
+    "concurrencyDesc": "当前版本强制顺序处理以避免思源事务 panic，保留设置供后续恢复",
+    "interval": "请求间隔",
+    "intervalDesc": "毫秒，数值越大越安全但更慢",
+    "slash": "斜杠命令触发词",
+    "slashDesc": "在编辑器中输入该词唤起笔记搜索，多个用逗号分隔",
+    "cover": "缓存书籍封面",
+    "coverDesc": "下载封面到本地并插入书籍文档顶部，同时在插件面板显示",
+    "clearCover": "清理封面缓存",
+    "cleared": "封面缓存已清理",
+    "resetState": "重置同步状态",
+    "resetStateDesc": "清除本地同步记录，下次同步将视为首次",
+    "resetStateConfirm": "重置后插件将无法识别已有的笔记块，下次同步可能产生重复内容。仅在排查问题时使用。确定重置吗？",
+    "resetDone": "同步状态已重置",
+    "saved": "设置已保存",
+    "donateQrAlt": "打赏收款码",
+    "donateNote": "独立开发，感谢打赏，不断进步",
+    "donateAuthor": "作者  Fang-type",
+    "donateContact": "联系方式",
+    "donateEmail": "fxysife@163.com"
+  },
+
+  "msg": {
+    "ok": "操作成功",
+    "failed": "操作失败",
+    "copied": "已复制"
+  }
+}

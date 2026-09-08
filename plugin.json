@@ -1,0 +1,54 @@
+{
+  "name": "siyuan-plugin-weread-sync",
+  "author": "fangtype",
+  "url": "https://github.com/leofang230316-prog/siyuan-plugin-weread-sync",
+  "version": "1.2.1",
+  "minAppVersion": "3.0.0",
+  "disabledInPublish": false,
+  "icon": "icon.png",
+  "preview": "preview.png",
+  "backends": [
+    "windows",
+    "linux",
+    "darwin",
+    "ios",
+    "android",
+    "docker"
+  ],
+  "frontends": [
+    "desktop",
+    "mobile",
+    "browser-desktop",
+    "browser-mobile",
+    "desktop-window"
+  ],
+  "displayName": {
+    "default": "WeRead Sync",
+    "zh-CN": "微信读书同步",
+    "en-US": "WeRead Sync"
+  },
+  "description": {
+    "default": "Sync WeRead books, highlights and notes into SiYuan incrementally, never overwriting your edits",
+    "zh-CN": "同步微信读书的书籍、划线与想法到思源笔记，增量更新且不覆盖你的编辑",
+    "en-US": "Sync WeRead books, highlights and notes into SiYuan incrementally, never overwriting your edits"
+  },
+  "readme": {
+    "default": "README_en_US.md",
+    "zh-CN": "README.md",
+    "en-US": "README_en_US.md"
+  },
+  "funding": {
+    "openCollective": "",
+    "patreon": "",
+    "github": "",
+    "custom": []
+  },
+  "keywords": [
+    "微信读书",
+    "weread",
+    "笔记同步",
+    "划线",
+    "阅读"
+  ],
+  "i18n": ["zh_CN", "en_US"]
+}

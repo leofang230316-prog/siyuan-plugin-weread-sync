@@ -1,0 +1,139 @@
+{
+  "pluginName": "WeRead Sync",
+  "pluginDesc": "Sync WeRead books, highlights and notes into SiYuan",
+
+  "login": {
+    "title": "Sign in to WeRead",
+    "desc": "Scan the QR code below with WeChat to sign in",
+    "refreshTip": "Refresh QR code",
+    "waiting": "Waiting for scan…",
+    "scanned": "Scanned, please confirm in WeChat",
+    "success": "Signed in successfully",
+    "failed": "Sign in failed, please retry",
+    "expired": "QR code expired, refreshing automatically…",
+    "otp": "Verification code required",
+    "otpDesc": "This sign-in needs extra verification. Enter the code sent to your WeChat or phone",
+    "otpPlaceholder": "Enter verification code",
+    "otpSubmit": "Submit code",
+    "otpWrong": "Incorrect code, please try again",
+    "otpExpired": "Code expired, please request a new one",
+    "qrCountdown": "QR code refreshes in {n}s",
+    "logout": "Sign out",
+    "logoutConfirm": "Signing out clears local credentials. Already synced notes are unaffected. Continue?",
+    "notLoggedIn": "Not signed in",
+    "cookieFallback": "QR code not working? Paste Cookie manually",
+    "cookieTitle": "Paste Cookie manually",
+    "cookieDesc": "Sign in at weread.qq.com in your browser, open DevTools Network panel, copy the Cookie value of any request and paste it below.",
+    "cookiePlaceholder": "Paste Cookie here, e.g. wr_vid=xxx; wr_skey=xxx; ...",
+    "cookieSubmit": "Submit",
+    "cookieEmpty": "Cookie cannot be empty",
+    "cookieInvalid": "Invalid Cookie, please check completeness",
+    "loggedIn": "Signed in",
+    "nickname": "Nickname",
+    "checkCred": "Checking sign-in status…",
+    "credExpired": "Session expired, please sign in again"
+  },
+
+  "dock": {
+    "title": "WeRead",
+    "syncAll": "Sync all",
+    "quickSync": "Quick sync (books with notes only)",
+    "viewLog": "View sync log",
+    "refresh": "Refresh shelf",
+    "settings": "Settings",
+    "searchPlaceholder": "Search title, author, highlight or note…",
+    "bookCount": "{n} books",
+    "notesCount": "{n} notes",
+    "noBooks": "No books yet, click \"Sync all\" to start",
+    "noMatch": "No matching books or notes",
+    "progress": "Progress {n}%",
+    "readingTime": "Read {n}",
+    "insert": "Insert",
+    "inserted": "Inserted at cursor",
+    "insertFailed": "Insert failed, make sure the cursor is in a document",
+    "sync": "Sync",
+    "syncing": "Syncing",
+    "mobileReadonly": "Mobile supports viewing only, use desktop to sync and insert"
+  },
+
+  "sync": {
+    "title": "Syncing",
+    "preparing": "Fetching bookshelf…",
+    "fetchingBook": "Processing \"{title}\"",
+    "progress": "{done} / {total}",
+    "cancel": "Cancel",
+    "done": "Sync complete",
+    "cancelled": "Sync cancelled",
+    "report": "Added {added} · Updated {updated} · Conflicts {conflict} · Deleted remotely {deleted} · Failed {failed}",
+    "failedList": "These books failed to sync",
+    "forceRebuild": "Force full rebuild",
+    "forceRebuildTitle": "Force full rebuild",
+    "forceRebuildWarn": "This discards ALL your edits in these documents and regenerates them from current WeRead content. This cannot be undone. Continue?",
+    "noLogin": "Please sign in to WeRead first",
+    "interrupted": "Sync interrupted, completed part is saved, run sync again to resume"
+  },
+
+  "doc": {
+    "bookInfo": "Book info",
+    "author": "Author",
+    "translator": "Translator",
+    "publisher": "Publisher",
+    "publishTime": "Published",
+    "isbn": "ISBN",
+    "category": "Category",
+    "progress": "Progress",
+    "readingTime": "Reading time",
+    "cover": "Cover",
+    "notes": "Notes"
+  },
+
+  "note": {
+    "deletedMark": "(deleted in WeRead)",
+    "conflictMark": "(updated in WeRead)",
+    "noChapter": "Uncategorized"
+  },
+
+  "search": {
+    "title": "Insert WeRead note",
+    "placeholder": "Search title, author, highlight or note…",
+    "empty": "No matching notes",
+    "hint": "↑↓ select · Enter insert · Esc close"
+  },
+
+  "setting": {
+    "title": "Settings",
+    "notebook": "Notebook",
+    "notebookDesc": "Synced notes are written to this notebook",
+    "syncRange": "Sync range",
+    "rangeAll": "All books",
+    "rangeNoted": "Books with notes only",
+    "autoSync": "Scheduled sync",
+    "autoSyncDesc": "Sync automatically once a day (off by default)",
+    "concurrency": "Concurrency",
+    "concurrencyDesc": "Currently forced sequential to avoid SiYuan transaction panic; kept for future use",
+    "interval": "Request interval",
+    "intervalDesc": "Milliseconds, higher is safer but slower",
+    "slash": "Slash command trigger",
+    "slashDesc": "Type it in the editor to open note search, comma separated",
+    "cover": "Cache book covers",
+    "coverDesc": "Download covers locally, insert at the top of each book document, and show in panel",
+    "clearCover": "Clear cover cache",
+    "cleared": "Cover cache cleared",
+    "resetState": "Reset sync state",
+    "resetStateDesc": "Clear local sync records, next sync is treated as first run",
+    "resetStateConfirm": "After reset the plugin cannot recognise existing note blocks, next sync may create duplicates. Use only for troubleshooting. Continue?",
+    "resetDone": "Sync state reset",
+    "saved": "Settings saved",
+    "donateQrAlt": "Donation QR code",
+    "donateNote": "Independently developed — thank you for your support!",
+    "donateAuthor": "Author  Fang-type",
+    "donateContact": "Contact",
+    "donateEmail": "fxysife@163.com"
+  },
+
+  "msg": {
+    "ok": "Done",
+    "failed": "Failed",
+    "copied": "Copied"
+  }
+}

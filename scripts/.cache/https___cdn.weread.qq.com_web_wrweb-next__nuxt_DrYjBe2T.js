@@ -1,0 +1,2 @@
+import{aA as o,aB as u,$ as y,aC as c}from"./BVQc4ULa.js";const l=o(async(r,m)=>{let e,a;const t=r.params.id;if(t){const i=([e,a]=u(()=>y("/api/ai/linkQuery",{method:"POST",body:{id:t}})),e=await e,a(),e);if(i.data.value){const{query:s,quidKey:d,sessionId:n}=i.data.value;return c({path:"/r/aiQuery",query:{initQuery:s,initQuidKey:d,initSessionId:n}})}}});export{l as default};
+//# sourceMappingURL=DrYjBe2T.js.map
