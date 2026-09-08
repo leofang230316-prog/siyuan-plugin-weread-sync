@@ -1,0 +1,1 @@
+# siyuan-plugin-weread-sync
