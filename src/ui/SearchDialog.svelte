@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import * as siyuan from "@/api/siyuan";
-    import { logger } from "@/core/logger";
 
     export let i18n: any;
     export let store: any;
@@ -53,7 +52,6 @@
         }
 
         items = list;
-        logger.info(`搜索索引已加载：${items.length} 条笔记（来自同步状态，不依赖 SQL 索引）`);
         loading = false;
     }
 

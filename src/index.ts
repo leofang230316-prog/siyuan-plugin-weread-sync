@@ -4,8 +4,6 @@ import * as siyuan from "@/api/siyuan";
 import { Store } from "@/core/store";
 import { AuthService } from "@/core/auth";
 import { SyncEngine } from "@/core/sync";
-import { logger } from "@/core/logger";
-import LogDialog from "@/ui/LogDialog.svelte";
 import Dock from "@/ui/Dock.svelte";
 import SearchDialog from "@/ui/SearchDialog.svelte";
 import SyncDialog from "@/ui/SyncDialog.svelte";
@@ -34,7 +32,6 @@ export default class WereadSyncPlugin extends Plugin {
     private auth: AuthService;
     private engine: SyncEngine;
     private dockApp: any = null;
-    private logApp: any = null;
     private isMobile = false;
     private autoSyncTimer: number | null = null;
     private lastAutoSync = 0;
@@ -49,12 +46,6 @@ export default class WereadSyncPlugin extends Plugin {
 
         this.isMobile = !!(window as any).siyuan?.mobile;
 
-        // 装配日志持久化：同步崩溃（transaction panic）后仍可回看现场
-        logger.restore(await this.store.loadLog());
-        logger.setPersistHook((entries) => {
-            void this.store.saveLog(entries);
-        });
-        logger.info(`plugin loaded v${(this as any)?.app?.app?.version ?? ""}`.trim());
 
         // 供 UI 组件调用
         (this as any).__wereadConfirm = (msg: string) =>
@@ -156,41 +147,6 @@ export default class WereadSyncPlugin extends Plugin {
                 this.openSearch(protyle, node);
             },
         });
-
-        this.addCommand({
-            langKey: "wereadShowLog",
-            langText: this.i18n.dock?.viewLog || "查看同步日志",
-            hotkey: "",
-            callback: () => this.openLog(),
-        });
-    }
-
-    /** 打开同步日志，用于定位 transaction panic 等内核崩溃 */
-    private openLog() {
-        new Dialog({
-            title: this.i18n.dock?.viewLog || "同步日志",
-            content: `<div id="wereadLogHost" style="height:100%"></div>`,
-            width: "860px",
-            height: "620px",
-            destroyCallback: () => {
-                this.logApp?.$destroy();
-                this.logApp = null;
-            },
-        });
-        // 等待 Dialog 挂载完成
-        setTimeout(() => {
-            const host = document.getElementById("wereadLogHost");
-            if (!host) return;
-            this.logApp = new LogDialog({
-                target: host,
-                props: {
-                    title: this.i18n.dock?.viewLog || "同步日志",
-                    onClear: () => {
-                        void this.store.clearLog();
-                    },
-                },
-            });
-        }, 0);
     }
 
     private registerSlash() {

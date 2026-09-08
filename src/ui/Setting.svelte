@@ -170,6 +170,9 @@
     .wr-setting {
         padding: 16px;
         min-width: 380px;
+        /* 内容较多（含底部打赏区）时限高并可滚动，避免超出对话框后无法操作 */
+        max-height: 70vh;
+        overflow-y: auto;
     }
     .wr-setting__card {
         background: var(--b3-theme-surface);

@@ -1,7 +1,6 @@
 import * as siyuan from "@/api/siyuan";
 import * as weread from "@/api/weread";
 import { AuthExpiredError } from "@/api/forward";
-import { logger } from "./logger";
 import { renderNoteMarkdown, renderBookMarkdown } from "./render";
 import { decideMerge, hashContent, normalizeForCompare } from "./merge";
 import type { Store } from "./store";
@@ -145,23 +144,17 @@ export class SyncEngine {
 
         // 思源 SQLite 对并发写入敏感，顺序处理单本书以避免 transaction panic。
         // 同一本书内部的笔记块插入也保持顺序。
-        logger.info(
-            `sync start: targets=${targets.length} pending=${pendingBooks.length} ` +
-                `quick=${!!opts.quick} force=${!!opts.force}`
-        );
+
 
         for (let i = 0; i < pendingBooks.length; i++) {
             if (opts.signal?.aborted) break;
             const book = pendingBooks[i];
-            logger.info(`[${i + 1}/${total}] 开始同步《${book.title}》(${book.bookId})`);
             try {
                 await this.syncOneBook(cred, book, notebookId, opts, stats);
                 await this.store.markDone(book.bookId);
-                logger.info(`[${i + 1}/${total}] 完成《${book.title}》`);
             } catch (e) {
                 // 凭证过期必须立刻终止并向上抛出，提示用户重新登录
                 if (e instanceof AuthExpiredError) throw e;
-                logger.error(`《${book.title}》同步失败: ${e?.message || String(e)}`);
                 stats.failedBooks.push({
                     bookId: book.bookId,
                     title: book.title,
@@ -180,11 +173,7 @@ export class SyncEngine {
         if (!opts.signal?.aborted) {
             await this.store.clearProgress();
         }
-        logger.info(
-            `sync done: added=${stats.added} updated=${stats.updated} ` +
-                `conflict=${stats.conflict} deleted=${stats.deleted} failed=${stats.failedBooks.length}`
-        );
-        logger.flush();
+
         return stats;
     }
 
@@ -234,9 +223,7 @@ export class SyncEngine {
             : [];
         const reviews = await weread.getReviews(cred, book.bookId);
         const notes = [...bookmarks, ...reviews];
-        logger.debug(
-            `《${book.title}》拉取到 notes=${notes.length} (划线=${bookmarks.length} 想法=${reviews.length})`
-        );
+
         if (notes.length === 0) return; // 无笔记的书不建文档，仅在面板展示
 
         if (opts.signal?.aborted) return;
@@ -252,7 +239,6 @@ export class SyncEngine {
         const extra = await weread.getBookInfo(cred, book.bookId);
         const readInfo = await weread.getReadInfo(cred, book.bookId);
         const meta: BookMeta = { ...book, ...extra, ...readInfo };
-        logger.debug(`《${book.title}》元数据就绪 chapters=${chapters?.length ?? 0}`);
 
         // 文档定位
         let state = opts.force ? undefined : this.store.getBookState(book.bookId);
@@ -289,12 +275,10 @@ export class SyncEngine {
         const chapterAnchors: Record<string, string> = { ...(state?.chapters || {}) };
         const i18n = opts.i18n;
 
-        logger.debug(`《${book.title}》准备写入 ${ordered.length} 条笔记到文档 ${docId}`);
 
         for (let ni = 0; ni < ordered.length; ni++) {
             const note = ordered[ni];
             if (opts.signal?.aborted) return;
-            logger.debug(`  写入笔记 ${ni + 1}/${ordered.length} id=${note.id} type=${note.type}`);
 
             const chapterTitle =
                 chapterTitleMap.get(note.chapterUid) || note.chapterTitle || i18n.note.noChapter;

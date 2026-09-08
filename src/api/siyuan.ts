@@ -1,5 +1,4 @@
 import { fetchSyncPost } from "siyuan";
-import { logger } from "@/core/logger";
 
 /**
  * 思源内核 API 封装。
@@ -8,54 +7,8 @@ import { logger } from "@/core/logger";
  * 否则会在多端同步时造成数据丢失。
  */
 
-/**
- * 生成参数摘要：只记录长度与关键短字段，绝不打印可能很大的正文
- * （尤其是 markdown / base64，实测封面数据可达 17 万字符）。
- */
-function summarize(data: any): string {
-    if (!data || typeof data !== "object") return "";
-    const parts: string[] = [];
-    for (const [k, v] of Object.entries(data)) {
-        if (v === undefined || v === null) continue;
-        if (typeof v === "string") {
-            if (v.length > 120) {
-                parts.push(`${k}.len=${v.length}`);
-            } else {
-                parts.push(`${k}="${v.replace(/\s+/g, " ")}"`);
-            }
-        } else if (typeof v === "object") {
-            const s = JSON.stringify(v) || "";
-            parts.push(s.length > 160 ? `${k}.len=${s.length}` : `${k}=${s}`);
-        } else {
-            parts.push(`${k}=${String(v)}`);
-        }
-    }
-    return parts.join(" ");
-}
-
-/**
- * 统一的内核调用入口，带日志埋点。
- *
- * 同步时的 `transaction panic` 只在弹窗报一句，没有任何上下文；
- * 这里把每次调用的参数摘要、耗时、返回码都记下来，panic 时最后一条日志就是现场。
- */
 async function post(url: string, data: any = {}): Promise<any> {
-    const t0 = Date.now();
-    logger.debug(`→ ${url} ${summarize(data)}`);
-    try {
-        const res = await fetchSyncPost(url, data);
-        const ms = Date.now() - t0;
-        const code = res?.code;
-        if (code !== undefined && code !== 0) {
-            logger.error(`✗ ${url} code=${code} msg=${res?.msg ?? ""} (${ms}ms)`);
-        } else {
-            logger.debug(`✓ ${url} (${ms}ms)`);
-        }
-        return res;
-    } catch (e: any) {
-        logger.error(`✗ ${url} THREW (${Date.now() - t0}ms) ${e?.message || String(e)}`);
-        throw e;
-    }
+    return await fetchSyncPost(url, data);
 }
 
 // ---------------------------------------------------------------- 笔记本
@@ -115,9 +68,7 @@ export async function appendBlock(parentId: string, markdown: string): Promise<s
         parentID: parentId,
         dataType: "markdown",
     });
-    const ids = pickBlockIds(res);
-    if (!ids.length) logger.warn(`appendBlock 未取到块 ID，父块=${parentId}`);
-    return ids;
+    return pickBlockIds(res);
 }
 
 export interface InsertBlockOptions {
@@ -135,14 +86,7 @@ export async function insertBlock(opts: InsertBlockOptions): Promise<string[]> {
         parentID: opts.parentID,
         nextID: opts.nextID,
     });
-    const ids = pickBlockIds(res);
-    if (!ids.length) {
-        logger.warn(
-            `insertBlock 未取到块 ID（笔记属性会丢失）previousID=${opts.previousID ?? "-"} ` +
-                `parentID=${opts.parentID ?? "-"} nextID=${opts.nextID ?? "-"}`
-        );
-    }
-    return ids;
+    return pickBlockIds(res);
 }
 
 export async function updateBlock(blockId: string, markdown: string): Promise<void> {

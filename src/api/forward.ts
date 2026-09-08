@@ -1,5 +1,4 @@
 import { fetchSyncPost } from "siyuan";
-import { logger } from "@/core/logger";
 
 /**
  * 网络层：所有对外部域名的请求必须且只能经由本模块转发。
@@ -72,21 +71,7 @@ export async function forward(opts: ForwardOptions): Promise<ForwardResult> {
     if (opts.responseEncoding) body.responseEncoding = opts.responseEncoding;
     if (opts.redirect === false) body.redirect = false;
 
-    // 记录请求（不记录 headers，其中含登录凭证）
-    const t0 = Date.now();
-    const tag = `${body.method} ${opts.url.split("?")[0]}`;
-    logger.debug(`⇢ forwardProxy ${tag}`);
-    let resp: ForwardResult;
-    try {
-        resp = (await fetchSyncPost("/api/network/forwardProxy", body)) as ForwardResult;
-    } catch (e: any) {
-        logger.error(`⇠ forwardProxy ${tag} THREW (${Date.now() - t0}ms) ${e?.message || String(e)}`);
-        throw e;
-    }
-    logger.debug(
-        `⇠ forwardProxy ${tag} -> code=${resp?.code} status=${resp?.data?.status ?? "-"} ` +
-            `bytes=${resp?.data?.body?.length ?? 0} (${Date.now() - t0}ms)`
-    );
+    const resp = (await fetchSyncPost("/api/network/forwardProxy", body)) as ForwardResult;
     return resp;
 }
 

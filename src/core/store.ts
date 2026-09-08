@@ -6,8 +6,6 @@ const KEY_SETTINGS = "settings.json";
 const KEY_SHELF = "shelf.json";
 const KEY_STATE = "sync-state.json";
 const KEY_PROGRESS = "sync-progress.json";
-const KEY_LOG = "sync-log.json";
-/** 持久化保留的日志条数上限，防止存储文件无限增长 */
 const LOG_KEEP = 600;
 
 export const DEFAULT_SETTINGS: SyncSettings = {
@@ -154,18 +152,4 @@ export class Store {
         await this.write(KEY_PROGRESS, null);
     }
 
-    // ------------------------------------------------------------ 同步日志
-
-    /** 保存日志（只留最近若干条），用于崩溃后回看现场 */
-    async saveLog(entries: unknown[]): Promise<void> {
-        await this.write(KEY_LOG, Array.isArray(entries) ? entries.slice(-LOG_KEEP) : []);
-    }
-
-    async loadLog(): Promise<any[]> {
-        return (await this.read(KEY_LOG)) || [];
-    }
-
-    async clearLog(): Promise<void> {
-        await this.write(KEY_LOG, []);
-    }
 }
