@@ -8,12 +8,22 @@
     export let onOpen: (bookId: string) => void = () => {};
 
     const t = i18n.dock;
+
+    // 封面直接使用微信读书 CDN 地址（实测该 CDN 无防盗链，浏览器可直连加载）。
+    // 加载失败时退回首字母占位，避免出现裂图。
+    let coverFailed = false;
+    $: if (coverSrc) coverFailed = false;
 </script>
 
 <div class="wr-card">
     <div class="wr-card__cover">
-        {#if coverSrc}
-            <img src={coverSrc} alt={book.title} loading="lazy" />
+        {#if coverSrc && !coverFailed}
+            <img
+                src={coverSrc}
+                alt={book.title}
+                loading="lazy"
+                on:error={() => (coverFailed = true)}
+            />
         {:else}
             <div class="wr-card__cover-ph">{(book.title || "?").trim().slice(0, 1)}</div>
         {/if}

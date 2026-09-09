@@ -2,8 +2,7 @@
     import LoginPanel from "./LoginPanel.svelte";
     import BookList from "./BookList.svelte";
     import SyncDialog from "./SyncDialog.svelte";
-    import { getCoverBase64 } from "@/api/weread";
-    import * as siyuan from "@/api/siyuan";
+        import * as siyuan from "@/api/siyuan";
 
     export let plugin: any;
     export let store: any;
@@ -14,7 +13,6 @@
 
     let loggedIn = auth.isLoggedIn();
     let books = store.getShelf();
-    let coverMap: Record<string, string> = {};
     let syncingIds: Set<string> = new Set();
     let syncOptions: any = null;
     let keyword = "";
@@ -33,24 +31,8 @@
             const shelf = await import("@/api/weread").then((m) => m.getShelf(cred));
             books = shelf.books;
             await store.saveShelf(books);
-            loadCovers();
         } catch (e) {
             console.error("[weread] refresh shelf failed", e);
-        }
-    }
-
-    async function loadCovers() {
-        if (!store.getSettings().cacheCover) return;
-        const pending = books.filter((b: any) => b.cover && !coverMap[b.bookId]).slice(0, 30);
-        for (const book of pending) {
-            try {
-                const b64 = await getCoverBase64(book.cover);
-                if (b64) {
-                    coverMap = { ...coverMap, [book.bookId]: `data:image/jpeg;base64,${b64}` };
-                }
-            } catch {
-                /* 封面失败不影响主流程 */
-            }
         }
     }
 
@@ -88,7 +70,6 @@
         await auth.logout();
         loggedIn = false;
         books = [];
-        coverMap = {};
     }
 </script>
 
@@ -129,7 +110,7 @@
                 {books}
                 {i18n}
                 {isMobile}
-                {coverMap}
+                showCover={store.getSettings().cacheCover}
                 {syncingIds}
                 bind:keyword
                 onSync={syncOneBook}

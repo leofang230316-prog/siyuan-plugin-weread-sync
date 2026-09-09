@@ -153,25 +153,33 @@ export default class WereadSyncPlugin extends Plugin {
         const triggers = this.store.getSettings().slashTriggers || [];
         if (!triggers.length) return;
 
-        this.protyleSlash = triggers.map((trigger: string, index: number) => ({
-            filter: [trigger],
-            html: `<div class="b3-list-item__first">
+        // 所有触发词合并为**一个**菜单项（filter 本身就是数组，天然支持多触发词）。
+        // 之前按触发词逐个注册，导致斜杠菜单里出现两条相同的「插入微信读书笔记」。
+        this.protyleSlash = [
+            {
+                filter: triggers,
+                html: `<div class="b3-list-item__first">
     <svg class="b3-list-item__graphic"><use xlink:href="#iconWeread"></use></svg>
     <span class="b3-list-item__text">${this.i18n.search?.title || "WeRead note"}</span>
 </div>`,
-            id: `weread-search-${index}`,
-            callback: (protyle: any, nodeElement: HTMLElement) => {
-                // slash 回调的 nodeElement 有时不是带 data-node-id 的块，兜底取当前选中块
-                const el =
-                    nodeElement ||
-                    protyle?.protyle?.element?.querySelector(".protyle-wysiwyg--select");
-                if (!el?.dataset?.nodeId) {
-                    showMessage(this.i18n.dock?.insertFailed || "Insert failed", 4000, "error");
-                    return;
-                }
-                this.openSearch(protyle, el as HTMLElement);
+                id: "weread-search",
+                callback: (protyle: any, nodeElement: HTMLElement) => {
+                    // slash 回调的 nodeElement 有时不是带 data-node-id 的块，兜底取当前选中块
+                    const el =
+                        nodeElement ||
+                        protyle?.protyle?.element?.querySelector(".protyle-wysiwyg--select");
+                    if (!el?.dataset?.nodeId) {
+                        showMessage(
+                            this.i18n.dock?.insertFailed || "Insert failed",
+                            4000,
+                            "error"
+                        );
+                        return;
+                    }
+                    this.openSearch(protyle, el as HTMLElement);
+                },
             },
-        }));
+        ];
     }
 
     // ------------------------------------------------------------ 交互

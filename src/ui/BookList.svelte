@@ -4,7 +4,8 @@
     export let books: any[] = [];
     export let i18n: any;
     export let readOnly: boolean = false;
-    export let coverMap: Record<string, string> = {};
+    /** 是否显示封面（对应设置项 cacheCover） */
+    export let showCover: boolean = true;
     export let syncingIds: any = new Set();
     export let onSync: (bookId: string) => void = () => {};
     export let onOpen: (bookId: string) => void = () => {};
@@ -46,7 +47,7 @@
                 {book}
                 {i18n}
                 {readOnly}
-                coverSrc={coverMap[book.bookId] || ""}
+                coverSrc={showCover ? book.cover || "" : ""}
                 syncing={syncingIds.has(book.bookId)}
                 {onSync}
                 {onOpen}

@@ -1,6 +1,6 @@
 {
   "name": "siyuan-plugin-weread-sync",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "type": "module",
   "description": "同步微信读书的书籍、划线与想法到思源笔记，增量更新且不覆盖你的编辑",
   "repository": "https://github.com/fangtype/siyuan-plugin-weread-sync",
